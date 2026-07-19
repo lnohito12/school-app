@@ -15,6 +15,7 @@ export default function TasksPage() {
       localStorage.getItem("tasks") || "[]"
     );
     const now = new Date();
+    const todayWeekday = (now.getDay() + 6) % 7
 
     const updatedTasks: Task[] = [];
      saved.forEach((task) => {
@@ -27,7 +28,7 @@ export default function TasksPage() {
         const diff =
           now.getTime() - last.getTime();
 
-        if (diff >= 7 * 24 * 60 * 60 * 1000) {
+        if (task.weekday === todayWeekday) {
           updatedTasks.push({
             ...task,
             id: Date.now() + Math.random(),
