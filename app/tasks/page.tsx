@@ -24,14 +24,24 @@ export default function TasksPage() {
         task.completed &&
         task.lastCompletedAt
       ) {
-        const last = new Date(task.lastCompletedAt);
-        const diff =
-          now.getTime() - last.getTime();
 
         if (task.weekday === todayWeekday) {
-          const today = new Date().toISOString().slice(0, 10);
+          const lastCompleted = new Date(task.lastCompletedAt);
+lastCompleted.setHours(0, 0, 0, 0);
 
-if (task.lastRevivedAt === today) {
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+if (task.lastRevivedAt === today.toISOString().slice(0, 10)) {
+  updatedTasks.push(task);
+  return;
+}
+
+const days =
+  (today.getTime() - lastCompleted.getTime()) /
+  (1000 * 60 * 60 * 24);
+
+if (days < 7) {
   updatedTasks.push(task);
   return;
 }
