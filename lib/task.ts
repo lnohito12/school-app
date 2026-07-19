@@ -14,4 +14,5 @@ export interface Task {
   createdAt: string;
 
   lastCompletedAt?: string;
+  lastRevivedAt?: string;
 }

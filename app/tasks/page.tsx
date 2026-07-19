@@ -29,6 +29,12 @@ export default function TasksPage() {
           now.getTime() - last.getTime();
 
         if (task.weekday === todayWeekday) {
+          const today = new Date().toISOString().slice(0, 10);
+
+if (task.lastRevivedAt === today) {
+  updatedTasks.push(task);
+  return;
+}
           updatedTasks.push({
             ...task,
             id: Date.now() + Math.random(),
@@ -41,6 +47,7 @@ export default function TasksPage() {
               .slice(0, 16),
             createdAt: new Date().toISOString(),
             lastCompletedAt: undefined,
+            lastRevivedAt: new Date().toISOString().slice(0, 10),
           });
         } else {
           updatedTasks.push(task);
