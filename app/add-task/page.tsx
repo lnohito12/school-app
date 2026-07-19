@@ -12,6 +12,7 @@ export default function AddTaskPage() {
   const [title, setTitle] = useState("");
   const [deadline, setDeadline] = useState("");
   const [weekly, setWeekly] = useState(false);
+  const [weekday, setWeekday] = useState(0);
 useEffect(() => {
   const saved = JSON.parse(
     localStorage.getItem("timetable") || "[]"
@@ -79,7 +80,27 @@ useEffect(() => {
 
           毎週の課題
         </label>
-
+{weekly && (
+  <select
+    value={weekday}
+    onChange={(e) => setWeekday(Number(e.target.value))}
+    style={{
+      width: "100%",
+      padding: "12px",
+      borderRadius: "8px",
+      border: "1px solid #ccc",
+      marginBottom: "15px",
+    }}
+  >
+    <option value={0}>月曜日</option>
+    <option value={1}>火曜日</option>
+    <option value={2}>水曜日</option>
+    <option value={3}>木曜日</option>
+    <option value={4}>金曜日</option>
+    <option value={5}>土曜日</option>
+    <option value={6}>日曜日</option>
+  </select>
+)}
         
           <button
   onClick={() => {
@@ -93,6 +114,7 @@ useEffect(() => {
       title,
       deadline,
       weekly,
+      weekday,
       completed: false,
       createdAt: new Date().toISOString(),
     });
