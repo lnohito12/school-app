@@ -66,11 +66,16 @@ if (days < 7) {
         updatedTasks.push(task);
       }
     });
-        updatedTasks.sort(
-      (a, b) =>
-        new Date(a.deadline).getTime() -
-        new Date(b.deadline).getTime()
-    );
+    updatedTasks.sort((a, b) => {
+  if (a.completed !== b.completed) {
+    return Number(a.completed) - Number(b.completed);
+  }
+
+  return (
+    new Date(a.deadline).getTime() -
+    new Date(b.deadline).getTime()
+  );
+});
 
     setTasks(updatedTasks);
 
