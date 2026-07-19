@@ -142,13 +142,21 @@ useEffect(() => {
 
   if (Notification.permission !== "granted") return;
 
-  if (todayTasks.length > 0) {
-    new Notification("📚 今日締切の課題があります！", {
-      body: `${todayTasks.length}件の課題があります。`,
-    });
-  }
-}, [todayTasks, notificationEnabled]);
+  if (todayTasks.length === 0) return;
 
+  const today = new Date().toISOString().slice(0, 10);
+
+  const lastNotified =
+    localStorage.getItem("lastNotificationDate");
+
+  if (lastNotified === today) return;
+
+  new Notification("📚 今日締切の課題があります！", {
+    body: `${todayTasks.length}件の課題があります。`,
+  });
+
+  localStorage.setItem("lastNotificationDate", today);
+}, [todayTasks, notificationEnabled]);
   
 
   return (
