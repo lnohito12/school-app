@@ -126,9 +126,16 @@ useEffect(() => {
   (task) =>
     getDeadlineText(task.deadline) === "🔴 今日締切"
 );
-const notificationEnabled =
-  typeof window !== "undefined" &&
-  localStorage.getItem("notification") !== "false";
+const [notificationEnabled, setNotificationEnabled] =
+  useState(false);
+
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  setNotificationEnabled(
+    localStorage.getItem("notification") !== "false"
+  );
+}, []);
 
 useEffect(() => {
   if (!notificationEnabled) return;
